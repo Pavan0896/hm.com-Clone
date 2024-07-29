@@ -30,7 +30,6 @@ const Cart = () => {
     dispatch(fetchData(`${url}/products/productsMany`, "cart"));
   };
 
-
   return (
     <Box
       display="flex"
@@ -113,7 +112,9 @@ const Cart = () => {
             },
           }}
         >
-          <Link to="/checkout"><Button>Checkout</Button></Link>
+          <Link to="/checkout">
+            <Button isDisabled={details.data.length == 0}>Checkout</Button>
+          </Link>
         </Box>
       </Box>
     </Box>
