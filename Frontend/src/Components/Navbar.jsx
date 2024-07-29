@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import NavbarLeft from "./NavbarLeft";
 import NavbarRight from "./NavbarRight";
+import React from "react";
 
 const Navbar = () => {
   return (
@@ -41,4 +42,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

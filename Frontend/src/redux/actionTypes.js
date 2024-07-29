@@ -1,0 +1,5 @@
+export const FETCH = "FETCH"
+export const SUCCESS = "SUCCESS"
+export const ERROR = "ERROR"
+export const DETAILS = "DETAILS"
+export const AUTH = "AUTH"

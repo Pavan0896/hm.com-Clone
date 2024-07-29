@@ -11,14 +11,16 @@ import {
   useDisclosure,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Logout from "./Logout";
 
 const NavbarLeft = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const [isLessThan767px] = useMediaQuery("(max-width: 1024px)");
   const navigate = useNavigate();
+  const auth = JSON.parse(localStorage.getItem("auth")) || false;
 
   const array = [
     { text: "Women", to: "/women" },
@@ -71,6 +73,11 @@ const NavbarLeft = () => {
                     ))}
                   </Box>
                   <Box display={"flex"} flexDirection={"column"} mt="25%">
+                    <Link to="/myAccount">
+                      <Box as="button" mb="5%">
+                        My Account
+                      </Box>
+                    </Link>
                     <Link to="https://www2.hm.com/en_in/customer-service.html">
                       <Box as="button" mb="5%">
                         Customer service
@@ -86,6 +93,7 @@ const NavbarLeft = () => {
                         Find a store
                       </Box>
                     </Link>
+                    {auth ? <Logout /> : null}
                   </Box>
                 </Box>
               </DrawerBody>
@@ -126,4 +134,4 @@ const NavbarLeft = () => {
   );
 };
 
-export default NavbarLeft;
+export default React.memo(NavbarLeft);
