@@ -41,7 +41,7 @@ const getProduct = async (req, res) => {
   }
   if (q) {
     const words = q.split(" ");
-    if (words.length === 1) {
+    if (words.length == 1) {
       if (q === "men") {
         filter.related_to = "men";
       } else if (q === "women") {

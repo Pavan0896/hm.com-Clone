@@ -61,7 +61,7 @@ const Cart = () => {
       >
         {details.loading ? (
           <p>Loading...</p>
-        ) : details.data.length > 0 ? (
+        ) : cart.length > 0 ? (
           details.data.map((e) => (
             <CardsComponent
               key={e._id}
@@ -97,7 +97,7 @@ const Cart = () => {
             },
           }}
         >
-          <Text>Total items in bag: {details.data.length}</Text>
+          <Text>Total items in bag: {cart.length}</Text>
           <hr />
           <Text>
             Total amount: ₹{" "}
@@ -113,7 +113,7 @@ const Cart = () => {
           }}
         >
           <Link to="/checkout">
-            <Button isDisabled={details.data.length == 0}>Checkout</Button>
+            <Button isDisabled={cart.length == 0}>Checkout</Button>
           </Link>
         </Box>
       </Box>

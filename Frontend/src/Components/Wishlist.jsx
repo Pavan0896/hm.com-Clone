@@ -18,8 +18,7 @@ const Wishlist = () => {
   }, []);
 
   useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setFavorites(favorites);
+    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
     if (favorites.length > 0) {
       dispatch(fetchData(`${url}/products/productsMany`, "favorite"));
     }
@@ -38,7 +37,7 @@ const Wishlist = () => {
     <Box
       w="100%"
       display="grid"
-      gridTemplateColumns={details.data.length > 0 ? "repeat(4, 1fr)" : "1fr"}
+      gridTemplateColumns={favorites.length > 0 ? "repeat(4, 1fr)" : "1fr"}
       ml="1%"
       mr="1%"
       mt="3%"
@@ -46,18 +45,17 @@ const Wishlist = () => {
       rowGap="0.5%"
       sx={{
         "@media screen and (max-width: 767px)": {
-          gridTemplateColumns:
-            details.data.length > 0 ? "repeat(2, 1fr)" : "1fr",
+          gridTemplateColumns: favorites.length > 0 ? "repeat(2, 1fr)" : "1fr",
         },
-        height: details.data.length === 0 ? "fit-content" : "auto",
-        display: details.data.length === 0 ? "flex" : "grid",
-        justifyContent: details.data.length === 0 ? "center" : "initial",
-        alignItems: details.data.length === 0 ? "initial" : "initial",
+        height: favorites.length === 0 ? "fit-content" : "auto",
+        display: favorites.length === 0 ? "flex" : "grid",
+        justifyContent: favorites.length === 0 ? "center" : "initial",
+        alignItems: favorites.length === 0 ? "initial" : "initial",
       }}
     >
       {details.loading ? (
         <p>Loading...</p>
-      ) : details.data.length > 0 ? (
+      ) : favorites.length > 0 ? (
         details.data.map((e) => (
           <CardsComponent
             key={e._id}

@@ -22,15 +22,17 @@ const Search = () => {
     }
   }, [searchParams, dispatch, url]);
 
+  const productsData = Array.isArray(details.data) ? details.data : [];
+
   return (
     <>
       {details.loading ? (
         <p>Loading...</p>
-      ) : details.data.length > 0 ? (
-        <Box display={"flex"} mt="3%" flexDirection={"column"} pb="9%">
+      ) : productsData.length > 0 ? (
+        <Box display="flex" mt="3%" flexDirection="column" pb="9%">
           <Box
-            display={"grid"}
-            gridTemplateColumns={"repeat(4, 1fr)"}
+            display="grid"
+            gridTemplateColumns="repeat(4, 1fr)"
             ml="1%"
             mr="1%"
             mt="3%"
@@ -42,7 +44,7 @@ const Search = () => {
               },
             }}
           >
-            {details.data.map((e) => (
+            {productsData.map((e) => (
               <div key={e._id}>
                 <CardsComponent e={e} />
               </div>

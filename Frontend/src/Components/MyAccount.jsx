@@ -94,7 +94,7 @@ const MyAccount = () => {
         >
           {details.loading ? (
             <p>Loading...</p>
-          ) : details.data.length > 0 ? (
+          ) : checkout.length > 0 ? (
             details.data.map((e) => (
               <CardsComponent key={e._id} e={e} from="checkout" />
             ))
