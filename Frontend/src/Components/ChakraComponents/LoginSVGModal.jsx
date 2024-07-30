@@ -93,7 +93,7 @@ function LoginSVGModal({ onClose }) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign={"center"}> Sign-in</ModalHeader>
+          <ModalHeader textAlign={"center"}>{!auth? " Sign-in" : "Sign out"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {!auth ? (
