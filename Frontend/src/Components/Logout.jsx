@@ -31,6 +31,7 @@ const Logout = () => {
       fontSize={FontSize}
       color={"white"}
       borderRadius={0}
+      mb="10%"
       _hover={{ bgColor: "rgba(0, 0, 0, 0.8)" }}
       w="100%"
       onClick={handleLogout}

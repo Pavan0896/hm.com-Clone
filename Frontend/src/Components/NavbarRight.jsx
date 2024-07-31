@@ -57,7 +57,7 @@ const NavbarRight = () => {
             </Box>
           </MenuButton>
         ) : !auth ? (
-          <LoginSVGModal />
+          <LoginSVGModal for={"svg"}/>
         ) : (
           <Link to="/myAccount">
             <Button w="100%" bgColor={"#FAF9F8"}>
@@ -75,12 +75,20 @@ const NavbarRight = () => {
         )}
 
         <MenuList onMouseEnter={onMenuOpen} onMouseLeave={onMenuClose}>
-          {auth ? <Logout /> : <LoginModal onClose={handleLoginClick} />}
-          <Link to="myAccount">
-            <Text ml="5%" fontWeight={400}>
-              My Account
-            </Text>
-          </Link>
+          {auth ? (
+            <Logout />
+          ) : (
+            <LoginModal onClose={handleLoginClick} for={"sign-in"} />
+          )}
+          {!auth ? (
+            <LoginModal onClose={handleLoginClick} for={"myAccount"} />
+          ) : (
+            <Link to="myAccount">
+              <Text ml="5%" fontWeight={400}>
+                My Account
+              </Text>
+            </Link>
+          )}
           <Link>
             <Text ml="5%" fontWeight={400}>
               H&M Membership

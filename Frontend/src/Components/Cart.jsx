@@ -4,11 +4,14 @@ import { fetchData } from "../redux/actions";
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import CardsComponent from "./CardsComponent";
 import { Link } from "react-router-dom";
+import LoginModal from "./ChakraComponents/LoginModal";
 
 const Cart = () => {
   const url = import.meta.env.VITE_BACKEND_URL;
   const dispatch = useDispatch();
   const details = useSelector((store) => store.products);
+  let auth = useSelector((store) => store.auth);
+  auth = JSON.parse(localStorage.getItem("auth")) || false;
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
@@ -112,9 +115,13 @@ const Cart = () => {
             },
           }}
         >
-          <Link to="/checkout">
-            <Button isDisabled={cart.length == 0}>Checkout</Button>
-          </Link>
+          {!auth ? (
+            <LoginModal for={"checkout"} />
+          ) : (
+            <Link to="/checkout">
+              <Button isDisabled={cart.length == 0}>Checkout</Button>
+            </Link>
+          )}
         </Box>
       </Box>
     </Box>

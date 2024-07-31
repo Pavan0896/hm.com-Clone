@@ -20,7 +20,7 @@ import Logout from "../Logout";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import RegisterModal from "./RegisterModal";
 
-const LoginModal = ({ onClose }) => {
+const LoginModal = ({ onClose, for: forProp }) => {
   const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +56,8 @@ const LoginModal = ({ onClose }) => {
         }
       } else if (res.status === 404) {
         showToast("Error", "User not found.", "error");
+      } else if (res.status === 401) {
+        showToast("Error", "Password incorrect.", "error");
       }
     } catch (error) {
       console.log(error);
@@ -64,22 +66,47 @@ const LoginModal = ({ onClose }) => {
 
   return (
     <>
-      <Button
-        w="100%"
-        bgColor={"black"}
-        borderRadius={"0%"}
-        color={"white"}
-        mb="10%"
-        _hover={"none"}
-        pt="10%"
-        pb="10%"
-        onClick={() => {
-          onOpen();
-          onClose();
-        }}
-      >
-        Sign in
-      </Button>
+      {forProp === "sign-in" && (
+        <Button
+          w="100%"
+          bgColor={"black"}
+          borderRadius={"0%"}
+          color={"white"}
+          mb="10%"
+          _hover={"none"}
+          pt="10%"
+          pb="10%"
+          onClick={() => {
+            onOpen();
+            onClose();
+          }}
+        >
+          Sign in
+        </Button>
+      )}
+      {forProp === "checkout" && (
+        <Button
+          onClick={() => {
+            onOpen();
+            onClose();
+          }}
+        >
+          Checkout
+        </Button>
+      )}
+      {forProp === "myAccount" && (
+        <Text
+          ml="5%"
+          fontWeight={400}
+          onClick={() => {
+            onOpen();
+            onClose();
+          }}
+          cursor={"pointer"}
+        >
+          My Account
+        </Text>
+      )}
 
       <Modal
         isOpen={isOpen}
