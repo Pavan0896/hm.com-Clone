@@ -12,6 +12,10 @@ H&M Clone is a full-stack web application that mimics the features of the H&M e-
 - **Dynamic URL**: URLs reflect the current state, allowing the same page or filtered data to appear when copied and pasted into another tab.
 - **Favorites**: Add or remove products from favorites using a heart-shaped SVG toggle button.
 - **Backend Authentication**: User authentication and token generation for accessing private routes.
+- **Toggle Theme**: Switch between light and dark themes for better user experience and accessibility.
+- **Infinite Scrolling**: Dynamically load more products as the user scrolls through the page, providing a seamless browsing experience.
+- **Individual Purchase History**: Users can view their past purchases in their profile.
+
 
 ## Tech Stack
 
