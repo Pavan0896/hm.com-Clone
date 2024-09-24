@@ -64,7 +64,9 @@ function ForgotPasswordModal() {
   };
   return (
     <>
-      <Link onClick={onOpen}>Forgot Password?</Link>
+      <Link onClick={onOpen} style={{ color: "black" }}>
+        Forgot Password?
+      </Link>
 
       <Modal
         isOpen={isOpen}
@@ -92,25 +94,49 @@ function ForgotPasswordModal() {
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
-                <Text mb="2%">Email</Text>
+                <Text mb="2%" color={"black"}>
+                  Email
+                </Text>
                 <Input
                   placeholder="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   bgColor={"white"}
+                  color={"black"}
+                  sx={{
+                    "::placeholder": {
+                      color: "black",
+                    },
+                  }}
                 />
-                <Text mb="2%">Enter new password</Text>
+                <Text mb="2%" color={"black"}>
+                  Enter new password
+                </Text>
                 <Input
                   placeholder="password"
                   bgColor={"white"}
+                  color={"black"}
+                  sx={{
+                    "::placeholder": {
+                      color: "black",
+                    },
+                  }}
                   value={password}
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <Text mb="2%">Confirm Password</Text>
+                <Text mb="2%" color={"black"}>
+                  Confirm Password
+                </Text>
                 <Input
                   placeholder="password"
                   bgColor={"white"}
+                  color={"black"}
+                  sx={{
+                    "::placeholder": {
+                      color: "black",
+                    },
+                  }}
                   value={confirmPassword}
                   type="password"
                   onChange={(e) => setConfirmPassword(e.target.value)}

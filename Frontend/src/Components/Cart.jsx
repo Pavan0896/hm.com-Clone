@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/actions";
-import { Box, Button, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Spinner, Text } from "@chakra-ui/react";
 import CardsComponent from "./CardsComponent";
 import { Link } from "react-router-dom";
 import LoginModal from "./ChakraComponents/LoginModal";
@@ -63,7 +63,14 @@ const Cart = () => {
         }}
       >
         {details.loading ? (
-          <p>Loading...</p>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+            ml="45%"
+          />
         ) : cart.length > 0 ? (
           details.data.map((e) => (
             <CardsComponent

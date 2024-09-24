@@ -1,10 +1,4 @@
-import {
-  AUTH,
-  DETAILS,
-  ERROR,
-  FETCH,
-  SUCCESS,
-} from "./actionTypes";
+import { AUTH, DETAILS, ERROR, FETCH, SUCCESS } from "./actionTypes";
 
 export const fetchData = (url, to = "data") => {
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -26,16 +20,40 @@ export const fetchData = (url, to = "data") => {
         ids = checkout;
       }
 
+      const token = localStorage.getItem("token");
+      const headers = {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      };
+
       if (ids.length > 0) {
+        if (to === "checkout") {
+          res = await fetch(url, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ ids }),
+          });
+        } else {
+          res = await fetch(url, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ ids }),
+          });
+        }
+      } else if (to === "purchase") {
         res = await fetch(url, {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ ids }),
         });
       } else {
         res = await fetch(url);
+      }
+
+      if (!res.ok) {
+        throw new Error(`Error: ${res.statusText}`);
       }
 
       const data = await res.json();
@@ -44,7 +62,8 @@ export const fetchData = (url, to = "data") => {
         to === "data" ||
         to === "favorite" ||
         to === "cart" ||
-        to === "checkout"
+        to === "checkout" ||
+        to === "purchase"
       ) {
         dispatch(successAction(data));
       } else if (to === "details") {
@@ -76,4 +95,3 @@ export const errorAction = () => {
 export const authAction = (payload) => {
   return { type: AUTH, payload };
 };
-

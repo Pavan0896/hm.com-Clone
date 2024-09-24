@@ -3,11 +3,20 @@ import AllRoutes from "./AllRoutes";
 import Navbar from "./Components/Navbar";
 import ProdNavigation from "./Components/ProdNavigation";
 import Footer from "./Components/Footer";
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 
 function App() {
+  const backgroundColor = useColorModeValue("#faf9f8", "gray.800");
+  const textColor = useColorModeValue("black", "white");
+
   return (
-    <Box display="flex" flexDirection="column" minHeight="100vh">
+    <Box
+      display="flex"
+      flexDirection="column"
+      minHeight="100vh"
+      bg={backgroundColor}
+      color={textColor}
+    >
       <Box flex="1">
         <Navbar />
         <ProdNavigation />
@@ -15,7 +24,7 @@ function App() {
           pb="20px"
           sx={{
             "@media screen and (max-width: 767px)": {
-              mb:"60%",
+              mb: "65%",
             },
           }}
         >

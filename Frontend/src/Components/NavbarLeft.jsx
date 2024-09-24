@@ -1,4 +1,4 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Drawer,
@@ -7,7 +7,9 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   IconButton,
+  Switch,
   useDisclosure,
   useMediaQuery,
 } from "@chakra-ui/react";
@@ -16,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Logout from "./Logout";
 import { useSelector } from "react-redux";
 import LoginSVGModal from "./ChakraComponents/LoginSVGModal";
+import { useThemeContext } from "./ThemeContext/themeContext";
 
 const NavbarLeft = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,6 +27,7 @@ const NavbarLeft = () => {
   const navigate = useNavigate();
   let auth = useSelector((store) => store.auth);
   auth = JSON.parse(localStorage.getItem("auth")) || false;
+  const { theme, toggleTheme } = useThemeContext();
 
   const array = [
     { text: "Women", to: "/women" },
@@ -43,8 +47,8 @@ const NavbarLeft = () => {
           <IconButton
             ref={btnRef}
             icon={<HamburgerIcon boxSize={6} />}
-            bg="#FAF9F8"
-            color="black"
+            bgColor={theme === "light" ? "#faf9f8" : "gray.800"}
+            color={theme === "light" ? "gray.800" : "#faf9f8"}
             onClick={onOpen}
             aria-label="Open Menu"
             _hover={{ bg: "gray.200" }}
@@ -101,6 +105,23 @@ const NavbarLeft = () => {
                       </Box>
                     </Link>
                     {auth ? <Logout /> : null}
+                  </Box>
+                  <Box>
+                    <Flex align="center">
+                      <IconButton
+                        icon={theme === "light" ? <SunIcon /> : <MoonIcon />}
+                        isRound
+                        size="md"
+                        aria-label="Toggle Theme"
+                        onClick={toggleTheme}
+                        mr={2}
+                      />
+                      <Switch
+                        isChecked={theme === "dark"}
+                        onChange={toggleTheme}
+                        colorScheme="teal"
+                      />
+                    </Flex>
                   </Box>
                 </Box>
               </DrawerBody>

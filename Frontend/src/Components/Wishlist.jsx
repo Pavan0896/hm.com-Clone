@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/actions";
-import { Box, Button, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Spinner, Text } from "@chakra-ui/react";
 import CardsComponent from "./CardsComponent";
 import { Link } from "react-router-dom";
 
@@ -54,7 +54,15 @@ const Wishlist = () => {
       }}
     >
       {details.loading ? (
-        <p>Loading...</p>
+        <Box m="auto">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Box>
       ) : favorites.length > 0 ? (
         details.data.map((e) => (
           <CardsComponent

@@ -37,10 +37,22 @@ const loginUser = async (req, res) => {
           res.status(500).send({ message: "Error while comparing password" });
         } else if (result) {
           const token = jwt.sign(
-            { email: user.email, userName: user.userName, role: user.role },
+            {
+              _id: user._id,
+              email: user.email,
+              userName: user.userName,
+              role: user.role,
+            },
             process.env.JWT_SECRET
           );
-          res.status(200).send({ message: "User Login Successful", token });
+          res
+            .status(200)
+            .send({
+              message: "User Login Successful",
+              token,
+              email: user.email,
+              userName: user.userName,
+            });
         } else {
           res.status(401).send({ message: "Password Incorrect" });
         }

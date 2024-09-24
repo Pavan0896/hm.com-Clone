@@ -48,6 +48,11 @@ const LoginModal = ({ onClose, for: forProp }) => {
           dispatch(authAction(true));
           localStorage.setItem("auth", JSON.stringify(true));
           localStorage.setItem("token", data.token);
+          localStorage.setItem(
+            "userDetails",
+            JSON.stringify({ email: data.email, userName: data.userName })
+          );
+          localStorage.removeItem("checkout");
           setEmail("");
           setPassword("");
           showToast("Success", "Login successful.", "success");
@@ -149,17 +154,33 @@ const LoginModal = ({ onClose, for: forProp }) => {
                       },
                   }}
                 >
-                  <Text mb="2%">Email</Text>
+                  <Text mb="2%" color={"black"}>
+                    Email
+                  </Text>
                   <Input
                     placeholder="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     bgColor={"white"}
+                    color={"black"}
+                    sx={{
+                      "::placeholder": {
+                        color: "black",
+                      },
+                    }}
                   />
-                  <Text mb="2%">Password</Text>
+                  <Text mb="2%" mt="2%" color={"black"}>
+                    Password
+                  </Text>
                   <Input
                     placeholder="password"
                     bgColor={"white"}
+                    color={"black"}
+                    sx={{
+                      "::placeholder": {
+                        color: "black",
+                      },
+                    }}
                     value={password}
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}

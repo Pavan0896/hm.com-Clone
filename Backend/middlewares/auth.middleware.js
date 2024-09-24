@@ -14,6 +14,7 @@ const auth = (req, res, next) => {
         res.status(500).send({ message: "Error while verifying token" });
       } else {
         req.body.role = decoded.role;
+        req.body.user_id = decoded._id;
         next();
       }
     });

@@ -1,5 +1,6 @@
-const ProductModel = require("../models/products.model");
 const { ObjectId } = require("mongodb");
+const { ProductModel, CarouselModel } = require("../models/products.model");
+const PurchaseModel = require("../models/purchased.model");
 
 const postProduct = async (req, res) => {
   const { title, price, image1, image2, category, related_to, rating } =
@@ -151,7 +152,7 @@ const updateProduct = async (req, res) => {
 
 const getMany = async (req, res) => {
   try {
-    const { ids } = req.body;
+    const { ids, _id } = req.body;
 
     if (!Array.isArray(ids)) {
       return res.status(400).send({ error: "IDs should be an array" });
@@ -191,6 +192,109 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const postPurchase = async (req, res) => {
+  const { ids, user_id } = req.body;
+
+  try {
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).send({ message: "No valid ids provided" });
+    }
+
+    const purchased = await PurchaseModel.findOneAndUpdate(
+      { user_id },
+      {
+        $addToSet: { ids: { $each: ids } },
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    if (!purchased) {
+      return res
+        .status(404)
+        .send({ message: "Purchase record not found or created" });
+    }
+
+    res.status(200).send({ message: "Product added successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Internal error" });
+  }
+};
+
+const getPurchasedProducts = async (req, res) => {
+  const { user_id } = req.body;
+
+  if (!user_id) {
+    return res.status(400).send({ message: "User ID is required" });
+  }
+
+  try {
+    const purchasedIds = await PurchaseModel.aggregate([
+      {
+        $match: { user_id },
+      },
+      {
+        $project: { _id: 0, ids: 1 },
+      },
+    ]);
+
+    if (!purchasedIds.length || !purchasedIds[0].ids.length) {
+      return res
+        .status(404)
+        .send({ message: "No products found for the provided user ID" });
+    }
+
+    const products = await ProductModel.find({
+      _id: { $in: purchasedIds[0].ids },
+    });
+
+    console.log(products);
+
+    if (products.length === 0) {
+      return res
+        .status(404)
+        .send({ message: "No products found for the provided IDs" });
+    }
+    res.status(200).send(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal error" });
+  }
+};
+
+const getSuggestions = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).send({ message: "Query parameter is required" });
+  }
+
+  try {
+    const regex = new RegExp(q, "i");
+
+    const suggestions = await ProductModel.find(
+      {
+        $or: [{ title: { $regex: regex } }, { category: { $regex: regex } }],
+      },
+      {
+        title: 1,
+        category: 1,
+        _id: 1,
+      }
+    )
+      .limit(10)
+      .exec();
+
+    if (suggestions.length === 0) {
+      return res.status(404).send({ message: "No suggestions found" });
+    }
+
+    res.status(200).send(suggestions);
+  } catch (error) {
+    console.error("Error fetching suggestions:", error);
+    res.status(500).send({ message: "Internal error", error });
+  }
+};
+
 module.exports = {
   postProduct,
   getProduct,
@@ -198,4 +302,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getMany,
+  postPurchase,
+  getPurchasedProducts,
+  getSuggestions,
 };

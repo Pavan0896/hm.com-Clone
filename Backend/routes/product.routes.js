@@ -6,6 +6,7 @@ const {
   deleteProduct,
   findProduct,
   getMany,
+  getSuggestions,
 } = require("../controllers/product.controller");
 const auth = require("../middlewares/auth.middleware");
 
@@ -22,5 +23,7 @@ prodRouter.post("/productsMany", getMany);
 prodRouter.patch("/updateProducts/:_id", auth, updateProduct);
 
 prodRouter.delete("/deleteProducts/:_id", auth, deleteProduct);
+
+prodRouter.get("/suggestions", getSuggestions);
 
 module.exports = prodRouter;

@@ -3,6 +3,7 @@ const connection = require("./config/db");
 const prodRouter = require("./routes/product.routes");
 const userRouter = require("./routes/users.router");
 const cors = require("cors");
+const purchaseRouter = require("./routes/purchased.route");
 require("dotenv").config();
 
 const port = process.env.PORT;
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/products", prodRouter);
 app.use("/user", userRouter);
+app.use("/purchase", purchaseRouter);
 
 app.get("/", (req, res) => {
   res.status(200).send("Health check is fine");

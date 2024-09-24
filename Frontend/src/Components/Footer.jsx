@@ -1,15 +1,19 @@
 import React from "react";
+import { useThemeContext } from "./ThemeContext/themeContext";
 
 const Footer = () => {
+  const { theme } = useThemeContext();
+  const colour = theme === "light" ? "black" : "white";
   return (
-    <div style={{ backgroundColor: "#f0f0f0" }}>
+    <div style={{ backgroundColor: theme === "light" ? "#f0f0f0" : "black" }}>
       <div className="container">
         <footer className="py-3 my-4">
           <ul className="nav justify-content-center border-bottom pb-3 mb-3">
             <li className="nav-item">
               <a
                 href="https://www2.hm.com/en_in/index.html"
-                className="nav-link px-2 text-body-secondary"
+                className="nav-link px-2 "
+                style={{ color: colour }}
               >
                 Home
               </a>
@@ -17,7 +21,8 @@ const Footer = () => {
             <li className="nav-item">
               <a
                 href="https://www2.hm.com/en_in/customer-service.html"
-                className="nav-link px-2 text-body-secondary"
+                className="nav-link px-2 "
+                style={{ color: colour }}
               >
                 Customer Service
               </a>
@@ -25,7 +30,8 @@ const Footer = () => {
             <li className="nav-item">
               <a
                 href="https://www2.hm.com/en_in/customer-service/contact.html"
-                className="nav-link px-2 text-body-secondary"
+                className="nav-link px-2 "
+                style={{ color: colour }}
               >
                 Contact
               </a>
@@ -33,7 +39,8 @@ const Footer = () => {
             <li className="nav-item">
               <a
                 href="https://www2.hm.com/en_in/customer-service/legal-and-privacy/privacy-link.html"
-                className="nav-link px-2 text-body-secondary"
+                className="nav-link px-2 "
+                style={{ color: colour }}
               >
                 Legal & Privacy
               </a>
@@ -41,7 +48,8 @@ const Footer = () => {
             <li className="nav-item">
               <a
                 href="https://hmgroup.com/about-us/"
-                className="nav-link px-2 text-body-secondary"
+                className="nav-link px-2 "
+                style={{ color: colour }}
               >
                 About
               </a>
@@ -83,7 +91,7 @@ const Footer = () => {
                 <use xlinkHref="#bootstrap"></use>
               </svg>
             </a>
-            <span className="mb-3 mb-md-0 text-body-secondary">
+            <span className="mb-3 mb-md-0 " style={{ color: colour }}>
               © 2024 Company, Inc
             </span>
           </div>

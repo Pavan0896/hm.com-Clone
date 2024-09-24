@@ -4,17 +4,19 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   Button,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { fetchData } from "../../redux/actions";
 
 function ReturnFocus() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
+  const dispatch = useDispatch();
+  const url = import.meta.env.VITE_BACKEND_URL;
 
   const handleConfirmOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -23,6 +25,7 @@ function ReturnFocus() {
 
     localStorage.setItem("checkout", JSON.stringify(cartItems));
 
+    dispatch(fetchData(`${url}/purchase/purchased`, "checkout"));
     onClose();
   };
 
@@ -41,12 +44,6 @@ function ReturnFocus() {
         <ModalContent>
           <ModalHeader>Order placed successfully</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <Text>
-              Sit back and relax until we deliver your order. <br /> or <br />
-              Continue exploring our variety of products.
-            </Text>
-          </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleConfirmOrder}>

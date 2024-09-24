@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/actions";
-import { Box, Select } from "@chakra-ui/react";
+import { Box, Select, Spinner } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import FontSize from "../FuncComponents/FontSize";
 import CardsComponent from "./CardsComponent";
@@ -12,6 +12,7 @@ const Kids = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [sort, setSort] = useState("");
   const [order, setOrder] = useState("");
+  const [visibleItems, setVisibleItems] = useState(12);
   const dispatch = useDispatch();
   const details = useSelector((store) => store.products);
   const url = import.meta.env.VITE_BACKEND_URL;
@@ -68,10 +69,36 @@ const Kids = () => {
     setSearchParams(newParams);
   };
 
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 200) {
+      setVisibleItems((prevVisibleItems) =>
+        Math.min(prevVisibleItems + 8, details.data.length)
+      );
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [details.data]);
+
   return (
     <>
       {details.loading ? (
-        <p>Loading...</p>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+          ml="45%"
+        />
       ) : (
         <Box display={"flex"} mt="3%" flexDirection={"column"} pb="5%">
           <Box
@@ -88,7 +115,7 @@ const Kids = () => {
                   fontSize: "9px",
                 },
               }}
-              fontSize={FontSize}
+              fontSize="sm"
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
@@ -122,7 +149,7 @@ const Kids = () => {
               },
             }}
           >
-            {details.data.map((e) => (
+            {details.data?.slice(0, visibleItems).map((e) => (
               <div key={e._id}>
                 <CardsComponent e={e} />
               </div>

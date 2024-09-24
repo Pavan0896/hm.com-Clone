@@ -6,6 +6,7 @@ const Home = () => {
   useEffect(() => {
     document.title = "H&M | Online Fashion, Homeware & Kids Clothes | H&M IN";
   }, []);
+
   return (
     <div className="homeDiv">
       <Link to="/women">
@@ -34,6 +35,7 @@ const Home = () => {
           </Button>
         </Box>
       </Link>
+
       <Link to="/men">
         <Box position={"relative"}>
           <Image
@@ -60,6 +62,7 @@ const Home = () => {
           </Button>
         </Box>
       </Link>
+
       <Link to="/kids">
         <Box position={"relative"}>
           <Image

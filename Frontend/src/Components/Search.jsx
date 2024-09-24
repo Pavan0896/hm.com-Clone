@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CardsComponent from "./CardsComponent";
@@ -27,9 +27,19 @@ const Search = () => {
   return (
     <>
       {details.loading ? (
-        <p>Loading...</p>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+          ml="45%"
+        />
       ) : productsData.length > 0 ? (
         <Box display="flex" mt="3%" flexDirection="column" pb="9%">
+          <Heading textAlign={"center"}>
+            Showing results for "{searchParams.get("q")}"
+          </Heading>
           <Box
             display="grid"
             gridTemplateColumns="repeat(4, 1fr)"

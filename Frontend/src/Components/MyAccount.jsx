@@ -7,6 +7,7 @@ import {
   Stack,
   Button,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/actions";
@@ -30,8 +31,11 @@ const MyAccount = () => {
   }, [details.data]);
 
   useEffect(() => {
-    dispatch(fetchData(`${url}/products/productsMany`, "checkout"));
+    console.log("dispatched");
+    dispatch(fetchData(`${url}/purchase/purchased`, "purchase"));
   }, [dispatch, url]);
+
+  console.log(details);
 
   return (
     <Box display={"flex"} flexDirection={"column"}>
@@ -77,8 +81,8 @@ const MyAccount = () => {
         <Heading>Previous Orders</Heading>
         <Box
           display="grid"
-          gridTemplateColumns="repeat(3, 1fr)"
-          w="80%"
+          gridTemplateColumns="repeat(4, 1fr)"
+          w="98%"
           ml="1%"
           mr="1%"
           mt="3%"
@@ -93,9 +97,16 @@ const MyAccount = () => {
           }}
         >
           {details.loading ? (
-            <p>Loading...</p>
-          ) : checkout.length > 0 ? (
-            details.data.map((e) => (
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+              ml="45%"
+            />
+          ) : details.data?.length > 0 ? (
+            details.data?.map((e) => (
               <CardsComponent key={e._id} e={e} from="checkout" />
             ))
           ) : (

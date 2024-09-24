@@ -107,42 +107,68 @@ function RegisterModal({ onClose }) {
             >
               <Box bgColor={"#f0f0f0"} w="100%" pl="3%" pr="3%" pb="2%" pt="2%">
                 <form onSubmit={handleSubmit}>
-                  <Text mb="2%">User Name</Text>
+                  <Text mb="2%" color={"black"}>
+                    User Name
+                  </Text>
                   <Input
                     placeholder="User Name"
                     name="name"
                     bgColor={"white"}
+                    color={"black"}
+                    sx={{
+                      "::placeholder": {
+                        color: "black",
+                      },
+                    }}
                     onChange={handleChange}
                     value={form.name}
                   />
-                  <Text mb="2%" mt="2%">
+                  <Text mb="2%" mt="2%" color={"black"}>
                     Email
                   </Text>
                   <Input
                     placeholder="email"
                     name="email"
                     bgColor={"white"}
+                    color={"black"}
+                    sx={{
+                      "::placeholder": {
+                        color: "black",
+                      },
+                    }}
                     onChange={handleChange}
                     value={form.email}
                   />
-                  <Text mb="2%" mt="2%">
+                  <Text mb="2%" mt="2%" color={"black"}>
                     Password
                   </Text>
                   <Input
                     placeholder="password"
                     name="password"
                     bgColor={"white"}
+                    color={"black"}
+                    sx={{
+                      "::placeholder": {
+                        color: "black",
+                      },
+                    }}
                     onChange={handleChange}
                     type="password"
                     value={form.password}
                   />
-                  <Text mb="2%" mt="2%">
+                  <Text mb="2%" mt="2%" color={"black"}>
                     Confirm password
                   </Text>
                   <Input
                     placeholder="confirm password"
                     name="confirmPassword"
                     bgColor={"white"}
+                    color={"black"}
+                    sx={{
+                      "::placeholder": {
+                        color: "black",
+                      },
+                    }}
                     onChange={handleChange}
                     type="password"
                     value={form.confirmPassword}
